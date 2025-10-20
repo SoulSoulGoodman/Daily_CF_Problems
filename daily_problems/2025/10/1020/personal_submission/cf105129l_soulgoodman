@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
+vector<int>prime={2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47};
+vector<int>base={1};
+void solve() {
+    int n;
+		cin >> n;
+
+		vector<int> vis(51, 0);
+		while (n --) {
+			int x;
+			cin >> x;
+			vis[x] = 1;
+		}
+
+		for (auto &v: base) {
+			bool flg = true;
+			for (int i = 0; i <= 50; i ++) {
+				if (vis[i] && gcd(i, v) == 1) {
+					flg = false;
+					break;
+				}
+			}
+			if (flg) {
+				cout << v << '\n';
+				break;
+			}
+		}
+}
+
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    for(auto &x:prime){
+        int k=base.size();
+        for(int i=0;i<k;i++){
+            base.emplace_back(base[i]*x);
+        }
+    }
+    sort(base.begin(),base.end());
+    int t = 1;
+    cin >> t;
+    while(t--) solve();
+}
